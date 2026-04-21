@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tra cứu kết quả học tập - UTT</title>
+    <title>Tra cứu thông tin học bổng - UTT</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
 <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
-    <h1 class="text-2xl font-bold text-blue-800 mb-6 text-center">TRA CỨU THÔNG TIN SINH VIÊN</h1>
+    <h1 class="text-2xl font-bold text-blue-800 mb-6 text-center">TRA CỨU THÔNG TIN HỌC BỔNG</h1>
     
     <div class="flex gap-2 mb-8">
         <input type="text" id="studentId" placeholder="Nhập mã sinh viên..." 
@@ -44,14 +44,20 @@
 
         if (student) {
             resultDiv.classList.remove('hidden');
+            // Tìm chính xác tên đã chuẩn hóa (không có xuống dòng)
+            const diemHe4 = student["ĐTB HK (hệ 4)"] || "N/A";
+            const loaiHB = student["Loại Học Bổng"] || "Không";
+            
             resultDiv.innerHTML = `
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <p><strong>Họ tên:</strong> ${student["Họ và tên"]}</p>
                     <p><strong>Lớp:</strong> ${student["Lớp"]}</p>
-                    <p><strong>ĐTB HK (hệ 4):</strong> ${student["ĐTB HK (hệ 4)"]}</p>
+                    <p><strong>ĐTB HK (hệ 4):</strong> <span class="font-bold text-blue-600">${diemHe4}</span></p>
                     <p><strong>Kết quả rèn luyện:</strong> ${student["KQPL RL"]}</p>
-                    <p><strong>Loại học bổng:</strong> <span class="text-green-600 font-bold">${student["Loại Học Bổng"] || 'Không'}</span></p>
-                    <p class="col-span-2"><strong>Ghi chú:</strong> ${student["Ghi chú (điểm hệ số 10)"]}</p>
+                    <p><strong>Học bổng:</strong> <span class="text-green-600 font-bold">${loaiHB}</span></p>
+                    <p class="md:col-span-2 text-sm text-gray-600 italic border-t pt-2">
+                        <strong>Ghi chú:</strong> ${student["Ghi chú (điểm hệ số 10)"] || "Không có"}
+                    </p>
                 </div>
             `;
         } else {
